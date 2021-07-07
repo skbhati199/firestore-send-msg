@@ -52,9 +52,9 @@ async function deliver(
   logInfo("delivery attempt");
 
   try {
-    if (!payload.channelId) {
-      throw new Error("Failed to deliver message. ChannelId is not defined.");
-    }
+    // if (!payload.channelId) {
+    //   throw new Error("Failed to deliver message. ChannelId is not defined.");
+    // }
 
     if (!payload.to) {
       throw new Error(
@@ -66,11 +66,17 @@ async function deliver(
       throw new Error("Failed to deliver message. Message content is empty.");
     }
 
+    var params = {
+      originator: "InfoSkills Technology",
+      recipients: [`${payload.to.toString()}`],
+      body: `${payload.content["text"]}`,
+    };
+
     logInfo(`sending message to channelId: ${payload.channelId}`);
     logInfo(`with content:`, payload.content);
 
     await new Promise<void>((resolve, reject) => {
-      mb.conversations.start(payload, function (err, response) {
+      mb.messages.create(params, function (err, response) {
         if (err) {
           logWarn(`send failed, got error: ${err}`);
           return reject(err);

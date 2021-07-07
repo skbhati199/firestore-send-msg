@@ -6,3 +6,4 @@ exports.default = {
     msgCollection: process.env.MSG_COLLECTION,
     logLevel: process.env.LOG_LEVEL,
 };
+//# sourceMappingURL=config.js.map
